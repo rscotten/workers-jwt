@@ -126,7 +126,7 @@ const token = await getTokenFromGCPServiceAccount({ serviceAccountJSON, aud, cry
 
 ## Node Usage (version 15+)
 
-Node 15 introduces the [Web Crypto API](https://nodejs.org/api/webcrypto.html).  When using NextJS, you may need to pass in the native Node `webcrypto` lib to get both SSR and webpack to work during dev mode.
+Node 15 introduces the [Web Crypto API](https://nodejs.org/api/webcrypto.html), so you don't have to pass in `cryptoImpl`.
 
 ~~~js
 const { getTokenFromGCPServiceAccount } = require('@sagi.io/workers-jwt')
@@ -134,11 +134,7 @@ const { getTokenFromGCPServiceAccount } = require('@sagi.io/workers-jwt')
 const serviceAccountJSON = { ... }
 const aud = 'https://firestore.googleapis.com/google.firestore.v1.Firestore';
 
-const token = await getTokenFromGCPServiceAccount({ 
-  serviceAccountJSON, 
-  aud, 
-  cryptoImpl: globalThis.crypto || require('crypto').webcrypto,
-});
+const token = await getTokenFromGCPServiceAccount({ serviceAccountJSON, aud });
 
 <... SAME AS CLOUDFLARE WORKERS ...>
 ~~~
